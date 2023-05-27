@@ -4,9 +4,9 @@ using System.Globalization;
 
 namespace SlottingMock.Application.Validators.Queries
 {
-    public class GetSlotQueryValidator : AbstractValidator<GetSlotsQuery>
+    public class GetSlotsQueryValidator : AbstractValidator<GetSlotsQuery>
     {
-        public GetSlotQueryValidator()
+        public GetSlotsQueryValidator()
         {
             RuleFor(q => q.Date)
                 .NotNull().WithMessage("'Date' must not be null")

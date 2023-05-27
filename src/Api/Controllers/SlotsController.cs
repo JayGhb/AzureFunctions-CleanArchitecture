@@ -22,9 +22,9 @@ namespace SlottingMock.Api.Controllers
             _mediator = mediator;
         }
 
-        [FunctionName("getSlots")]
-        public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)][FromQuery] GetSlotsRequestDto input, HttpRequest req,
+        [FunctionName(nameof(GetSlotsAsync))]
+        public async Task<IActionResult> GetSlotsAsync(
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "get")][FromQuery] GetSlotsRequestDto input, HttpRequest req,
             ILogger logger)
         {
             try
