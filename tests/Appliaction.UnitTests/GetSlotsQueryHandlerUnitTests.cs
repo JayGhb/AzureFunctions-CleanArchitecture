@@ -18,7 +18,7 @@ namespace Appliaction.UnitTests
         {
             //Arrange
             _ruleEngineServiceMock.Setup(x => x.GetSettings()).Returns(new List<string>() { "I am not empty" });
-            GetSlotsQuery fakeQuery = new GetSlotsQuery();
+            GetSlotsQuery fakeQuery = new GetSlotsQuery("1999-05-25");
             string expectedResult = string.Empty;
 
             //Act

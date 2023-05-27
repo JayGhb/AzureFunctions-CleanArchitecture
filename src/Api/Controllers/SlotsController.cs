@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using MediatR;
 using SlottingMock.Application.UseCases.Queries.GetSlots;
-using SlottingMock.Application.Common.Dtos;
 using FluentValidation;
 using System.Linq;
+using Application.Common.Dtos.Requests;
 
 namespace SlottingMock.Api.Controllers
 {
@@ -22,20 +22,16 @@ namespace SlottingMock.Api.Controllers
             _mediator = mediator;
         }
 
-        [FunctionName("getSlot")]
+        [FunctionName("getSlots")]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)][FromBody] InputDto input, HttpRequest req,
-            ILogger log)
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)][FromQuery] GetSlotsRequestDto input, HttpRequest req,
+            ILogger logger)
         {
             try
             {
-                GetSlotsQuery getSlotsQuery = new GetSlotsQuery()
-                {
-                    QueryPropertyA = input.PropertyA,
-                    QueryPropertyB = input.PropertyB
-                };
+                GetSlotsQuery getSlotsQuery = new GetSlotsQuery(input.Date);
 
-                var result = await _mediator.Send(getSlotsQuery);
+                string result = await _mediator.Send(getSlotsQuery);
 
                 return new OkObjectResult(result);
             }
@@ -50,7 +46,7 @@ namespace SlottingMock.Api.Controllers
                         Instance = req.Path,
                         Status = StatusCodes.Status400BadRequest,
                         Title = "One or more validation errors occurred.",
-                        Detail = $"{string.Join('-', validationErrorMessages)}"
+                        Detail = "See the errors object for details."
                     };
 
                     problemDetails.Errors.Add("QueryValidationErrors", validationErrorMessages);

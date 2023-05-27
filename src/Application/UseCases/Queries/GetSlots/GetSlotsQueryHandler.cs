@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using SlottingMock.Application.Common.Interfaces;
-using SlottingMock.Application.UseCases.Queries.NonAvailableItems;
 
 namespace SlottingMock.Application.UseCases.Queries.GetSlots
 {
