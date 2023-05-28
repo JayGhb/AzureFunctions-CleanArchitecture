@@ -10,6 +10,7 @@ using SlottingMock.Application.UseCases.Queries.GetSlots;
 using FluentValidation;
 using System.Linq;
 using Application.Common.Dtos.Requests;
+using System.Threading;
 
 namespace SlottingMock.Api.Controllers
 {
@@ -25,23 +26,22 @@ namespace SlottingMock.Api.Controllers
         [FunctionName(nameof(GetSlotsAsync))]
         public async Task<IActionResult> GetSlotsAsync(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = "get")][FromQuery] GetSlotsRequestDto input, HttpRequest req,
-            ILogger logger)
+            ILogger logger, CancellationToken cancellationToken)
         {
             try
             {
                 GetSlotsQuery getSlotsQuery = new GetSlotsQuery(input.Date);
-
-                string result = await _mediator.Send(getSlotsQuery);
+                string result = await _mediator.Send(getSlotsQuery, cancellationToken);
 
                 return new OkObjectResult(result);
             }
-            catch(Exception exception) 
+            catch (Exception exception) 
             {
                 if (exception is ValidationException validationException)
                 {
                     string[] validationErrorMessages = validationException.Errors.Select(x => x.ErrorMessage).ToArray();
 
-                    var problemDetails = new ValidationProblemDetails
+                    ValidationProblemDetails problemDetails = new ValidationProblemDetails
                     {
                         Instance = req.Path,
                         Status = StatusCodes.Status400BadRequest,
@@ -52,6 +52,24 @@ namespace SlottingMock.Api.Controllers
                     problemDetails.Errors.Add("QueryValidationErrors", validationErrorMessages);
 
                     return new BadRequestObjectResult(problemDetails); //the response sent to the client
+                }
+                else if (exception is OperationCanceledException operationCanceledException)
+                {
+                    ///Returning a ProblemDetails response upon request cancellation might not make sense in some cases
+                    ///as the client is not waiting for a response anymore. You might optionally return partial or interim results
+                    ///that have e.g. been fetched from a database. As with almost everything else, it depends on the nature of the operation
+                    ///and the desired behavior of the application.
+
+                    int statusCode = 499;
+
+                    ProblemDetails problemDetails = new ProblemDetails
+                    {
+                        Instance = req.Path,
+                        Status = statusCode,
+                        Title = "Request was canceled by the client."
+                    };
+
+                    return new ObjectResult(problemDetails) { StatusCode = statusCode };
                 }
 
                 return new ContentResult()
