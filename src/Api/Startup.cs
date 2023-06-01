@@ -4,9 +4,9 @@ using SlottingMock.Application.Common.Interfaces;
 using SlottingMock.Application.Extensions;
 using SlottingMock.Infrastructure.Services.RuleEngine;
 
-[assembly: FunctionsStartup(typeof(SlottingMock.Api.Startup))]
+[assembly: FunctionsStartup(typeof(Api.Startup))]
 
-namespace SlottingMock.Api
+namespace Api
 {
     public class Startup : FunctionsStartup
     {

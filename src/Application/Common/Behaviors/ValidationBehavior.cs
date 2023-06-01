@@ -19,7 +19,6 @@ namespace Reservation.Application.Common.Behaviors
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             await Task.WhenAll(_validators.Select(v => v.ValidateAndThrowAsync(request)));
-            _logger.LogWarning($"Validation errors on {typeof(TRequest).Name}");
             return await next();
         }
     }

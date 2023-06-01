@@ -18,6 +18,11 @@ namespace SlottingMock.Api.Controllers
     {
         private readonly IMediator _mediator;
 
+        /// <summary>
+        /// //////////////////////////////// TODO NEXT: REQUEST CORELLATION WITH x-correlation-id header and FunctionInvocationFilter
+        /// </summary>
+        /// <param name="mediator"></param>
+
         public SlotsController(IMediator mediator)
         {
             _mediator = mediator;
