@@ -11,21 +11,20 @@ using FluentValidation;
 using System.Linq;
 using Application.Common.Dtos.Requests;
 using System.Threading;
+using Application.Common;
+using Api;
 
 namespace SlottingMock.Api.Controllers
 {
-    public class SlotsController
+    public class SlotsController : FunctionBase
     {
         private readonly IMediator _mediator;
+        private ILogger<SlotsController> _logger;
 
-        /// <summary>
-        /// //////////////////////////////// TODO NEXT: REQUEST CORELLATION WITH x-correlation-id header and FunctionInvocationFilter
-        /// </summary>
-        /// <param name="mediator"></param>
-
-        public SlotsController(IMediator mediator)
+        public SlotsController(IMediator mediator, ILogger<SlotsController> logger) : base(logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         [FunctionName(nameof(GetSlotsAsync))]
@@ -35,6 +34,9 @@ namespace SlottingMock.Api.Controllers
         {
             try
             {
+                _logger.LogInformation("from injected logger");
+                string correlationId = RequestContext.CorrelationId;
+
                 GetSlotsQuery getSlotsQuery = new GetSlotsQuery(input.Date);
                 string result = await _mediator.Send(getSlotsQuery, cancellationToken);
 

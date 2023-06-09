@@ -8,7 +8,8 @@
       }
     },
     "logLevel": {
-      "default": "Warning",
+      "default": "Warning", //SlottingMock.Api.Controllers
+      "Function.SlottingMock.Api.Controllers.SlotsController": "Information",
       "Function.SlottingMock.Application.UseCases.Queries.GetSlots.GetSlotsQueryHandler": "Information"
     }
     }

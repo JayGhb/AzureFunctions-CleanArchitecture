@@ -1,8 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Reservation.Application.Common.Behaviors;
-using SlottingMock.Application.Common.Interfaces;
+using Application.Common.Behaviors;
 using System.Reflection;
 
 namespace SlottingMock.Application.Extensions
