@@ -33,7 +33,7 @@ namespace Api
                 if (!string.IsNullOrWhiteSpace(correlationId))
                 {
                     hasValidCorrelationId = true;
-                    loggerScope = _logger.BeginScope(new Dictionary<string, object> { { "ParameterName", correlationId } });
+                    loggerScope = _logger.BeginScope(new Dictionary<string, object> { { "CustomParameterName", correlationId } });
                     RequestContext.CorrelationId = correlationId;
                 }
             }
