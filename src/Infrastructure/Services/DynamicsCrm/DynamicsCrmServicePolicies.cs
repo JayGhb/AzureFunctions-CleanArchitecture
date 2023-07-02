@@ -3,9 +3,9 @@ using System.Net;
 
 namespace Infrastructure.Services.DynamicsCrm
 {
-    internal class DynamicsCrmServicePolicies
+    public class DynamicsCrmServicePolicies
     {
-        internal static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+        public static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
         {
             return Policy
             .HandleResult<HttpResponseMessage>(r =>
