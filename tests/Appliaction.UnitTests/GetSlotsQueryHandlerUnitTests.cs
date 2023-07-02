@@ -6,11 +6,11 @@ namespace Appliaction.UnitTests
 {
     public class GetSlotsQueryHandlerUnitTests
     {
-        private readonly Mock<IExternalApiService> _ruleEngineServiceMock;
+        private readonly Mock<IDynamicsCrmService> _ruleEngineServiceMock;
 
         public GetSlotsQueryHandlerUnitTests()
         {
-            _ruleEngineServiceMock = new Mock<IExternalApiService>();
+            _ruleEngineServiceMock = new Mock<IDynamicsCrmService>();
         }
 
         [Fact]

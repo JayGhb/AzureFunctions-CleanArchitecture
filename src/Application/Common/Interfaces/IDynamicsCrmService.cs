@@ -1,7 +1,7 @@
 ﻿
 namespace SlottingMock.Application.Common.Interfaces
 {
-    public interface IExternalApiService
+    public interface IDynamicsCrmService
     {
         Task<IEnumerable<string>> GetDataAsync(CancellationToken cancellationToken);
     }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SlottingMock.Application.Common.Interfaces;
-using SlottingMock.Infrastructure.Services.ExternalApi;
+using SlottingMock.Infrastructure.Services.DynamicsCrm;
+using Infrastructure.Services.DynamicsCrm;
 
 namespace Infrastructure.Extensions
 {
@@ -9,7 +10,7 @@ namespace Infrastructure.Extensions
         public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services)
         {
             //services.AddDbContext();
-            services.AddExternalApiService();
+            services.AddDynamicsCrmService();
             return services;
         }
 
@@ -21,9 +22,14 @@ namespace Infrastructure.Extensions
             return services;
         }*/
 
-        private static IServiceCollection AddExternalApiService(this IServiceCollection services)
+        private static IServiceCollection AddDynamicsCrmService(this IServiceCollection services)
         {
-            services.AddTransient<IExternalApiService, ExternalApiService>();
+            services.AddHttpClient<IDynamicsCrmService, DynamicsCrmService>("dynamicsCrm", client =>
+            {
+                client.BaseAddress = new Uri("https://yourorganizationname.api.crm.dynamics.com");
+                //add more configs as needed e.g. client.DefaultRequestHeaders.Add("Accept", "application/json");
+            })
+            .AddPolicyHandler(DynamicsCrmServicePolicies.GetRetryPolicy());
             return services;
         }
     }

@@ -44,6 +44,8 @@ namespace SlottingMock.Api.Controllers
             }
             catch (Exception exception) 
             {
+                _logger.LogError(exception.Message + " " + exception.StackTrace);
+
                 if (exception is ValidationException validationException)
                 {
                     string[] validationErrorMessages = validationException.Errors.Select(x => x.ErrorMessage).ToArray();

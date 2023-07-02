@@ -6,9 +6,9 @@ namespace SlottingMock.Application.UseCases.Queries.GetSlots
 {
     public class GetSlotsQueryHandler : IRequestHandler<GetSlotsQuery, string>
     {
-        private readonly IExternalApiService _externalApiService;
+        private readonly IDynamicsCrmService _externalApiService;
         private ILogger<GetSlotsQueryHandler> _logger;
-        public GetSlotsQueryHandler(IExternalApiService ruleEngineService, ILogger<GetSlotsQueryHandler> logger)
+        public GetSlotsQueryHandler(IDynamicsCrmService ruleEngineService, ILogger<GetSlotsQueryHandler> logger)
         {
             _externalApiService = ruleEngineService;
             _logger = logger;
