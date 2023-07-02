@@ -40,7 +40,9 @@ namespace Api
 
             if (!hasValidCorrelationId)
             {
-                RequestContext.CorrelationId = Guid.NewGuid().ToString();
+                string guid = Guid.NewGuid().ToString();
+                RequestContext.CorrelationId = guid;
+                loggerScope = _logger.BeginScope(new Dictionary<string, object> { { "CustomParameterName", guid } });
             }
 
             return Task.CompletedTask;

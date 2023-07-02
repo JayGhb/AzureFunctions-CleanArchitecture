@@ -6,11 +6,11 @@ namespace SlottingMock.Application.UseCases.Queries.GetSlots
 {
     public class GetSlotsQueryHandler : IRequestHandler<GetSlotsQuery, string>
     {
-        private readonly IRuleEngineService _ruleEngineService;
+        private readonly IExternalApiService _externalApiService;
         private ILogger<GetSlotsQueryHandler> _logger;
-        public GetSlotsQueryHandler(IRuleEngineService ruleEngineService, ILogger<GetSlotsQueryHandler> logger)
+        public GetSlotsQueryHandler(IExternalApiService ruleEngineService, ILogger<GetSlotsQueryHandler> logger)
         {
-            _ruleEngineService = ruleEngineService;
+            _externalApiService = ruleEngineService;
             _logger = logger;
         }
 
@@ -18,7 +18,7 @@ namespace SlottingMock.Application.UseCases.Queries.GetSlots
         {
             _logger.LogInformation("this works lol");
             //await Task.Delay(10000, cancellationToken);
-            List<string> mySettings = _ruleEngineService.GetSettings().ToList();
+            List<string> mySettings = (await _externalApiService.GetDataAsync(cancellationToken)).ToList();
 
             return string.Empty;
         }
