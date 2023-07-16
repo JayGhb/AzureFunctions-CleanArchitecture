@@ -1,18 +1,28 @@
-﻿using SlottingMock.Application.Common.Interfaces;
+﻿using Microsoft.Extensions.Logging;
+using SlottingMock.Application.Common.Interfaces;
 
 namespace SlottingMock.Infrastructure.Services.DynamicsCrm
 {
     public class DynamicsCrmService : IDynamicsCrmService
     {
         private readonly HttpClient _httpClient;
+        private readonly string _getDataEndpoint;
+        private ILogger<DynamicsCrmService> _logger;
 
-        public DynamicsCrmService(HttpClient httpClient)
+        public DynamicsCrmService(HttpClient httpClient, ILogger<DynamicsCrmService> logger)
         {
+            _getDataEndpoint = Environment.GetEnvironmentVariable("GetDataEndpoint");
+            if(_getDataEndpoint == null) throw new ArgumentNullException(nameof(_getDataEndpoint), $"Environment variable for GetDataEndpoint is not set.");
             _httpClient = httpClient;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<string>> GetDataAsync(CancellationToken cancellationToken) 
-        { 
+        {
+            string requestUrl = _httpClient.BaseAddress + _getDataEndpoint;
+            _logger.LogInformation("Requesting data from Dynamics {request}", requestUrl);
+            HttpResponseMessage result = await _httpClient.GetAsync(requestUrl, cancellationToken);
+
             return Enumerable.Empty<string>(); 
         }
     }
