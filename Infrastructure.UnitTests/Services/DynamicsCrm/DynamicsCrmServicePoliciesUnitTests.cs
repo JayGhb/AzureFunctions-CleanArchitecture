@@ -1,15 +1,19 @@
 using Infrastructure.Services.DynamicsCrm;
 using Microsoft.Extensions.DependencyInjection;
-using Polly;
-using Polly.Extensions.Http;
 using System.Net;
 
-namespace Infrastructure.UnitTests
+namespace Infrastructure.UnitTests.Services.DynamicsCrm
 {
     public class HttpClientFactory_Polly_Policy_Test
     {
         const string fakeClient = "fakeClient";
 
+        /// <summary>
+        /// This unit test is inspired by https://github.com/App-vNext/Polly/issues/555#issuecomment-451594435. <br/>
+        /// The <see cref="DynamicsCrmServicePolicies.GetRetryPolicy(Func{Polly.DelegateResult{HttpResponseMessage}, TimeSpan, int, Polly.Context, Task})"/> <br/> 
+        /// method gets a function that simply marks a boolean value as true, as its onRetryAsync method, indicating that the retries have been executed.
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task Configured_policy_on_named_client_is_used_when_client_makes_request()
         {
@@ -21,11 +25,7 @@ namespace Infrastructure.UnitTests
             HttpStatusCode codeHandledByPolicy = HttpStatusCode.TooManyRequests;
 
             services.AddHttpClient(fakeClient)
-                .AddPolicyHandler(DynamicsCrmServicePolicies.GetRetryPolicy())
-                .AddHttpMessageHandler(() => new StubDelegatingHandler(codeHandledByPolicy));
-
-            services.AddHttpClient(fakeClient)
-            .AddPolicyHandler(HttpPolicyExtensions.HandleTransientHttpError().RetryAsync(3, onRetry: (_, __) => retryCalled = true))
+            .AddPolicyHandler(DynamicsCrmServicePolicies.GetRetryPolicy(async (_, _, _, _) => retryCalled = true))
             .AddHttpMessageHandler(() => new StubDelegatingHandler(codeHandledByPolicy));
 
             HttpClient configuredClient =
@@ -46,8 +46,14 @@ namespace Infrastructure.UnitTests
 
     public class StubDelegatingHandler : DelegatingHandler
     {
-        private readonly HttpStatusCode stubHttpStatusCode;
-        public StubDelegatingHandler(HttpStatusCode stubHttpStatusCode) => this.stubHttpStatusCode = stubHttpStatusCode;
-        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) => Task.FromResult(new HttpResponseMessage(stubHttpStatusCode));
+        private readonly HttpStatusCode _stubHttpStatusCode;
+        private readonly HttpResponseMessage _responseMessage;
+        public StubDelegatingHandler(HttpStatusCode stubHttpStatusCode)
+        {
+            _stubHttpStatusCode = stubHttpStatusCode;
+            _responseMessage = new HttpResponseMessage(_stubHttpStatusCode);
+            _responseMessage.Headers.Add("Retry-After", "1");
+        }
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) => Task.FromResult(_responseMessage);
     }
 }

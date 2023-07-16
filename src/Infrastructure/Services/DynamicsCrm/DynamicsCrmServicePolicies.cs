@@ -5,14 +5,19 @@ namespace Infrastructure.Services.DynamicsCrm
 {
     public class DynamicsCrmServicePolicies
     {
-        public static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="onRetryAsync">Parameterized to assist with unit testing</param>
+        /// <returns></returns>
+        public static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy(Func<DelegateResult<HttpResponseMessage>, TimeSpan, int, Context, Task> onRetryAsync)
         {
             return Policy
             .HandleResult<HttpResponseMessage>(r =>
                 r.StatusCode == HttpStatusCode.TooManyRequests && r.Headers.RetryAfter != null)
             .WaitAndRetryAsync(3,
                 sleepDurationProvider: (_, result, _) => result.Result.Headers.RetryAfter.Delta.Value,
-                onRetryAsync: async (_, _, _, _) => { });
+                onRetryAsync: onRetryAsync);
         }
         
     }

@@ -29,7 +29,7 @@ namespace Infrastructure.Extensions
                 client.BaseAddress = new Uri("https://yourorganizationname.api.crm.dynamics.com");
                 //add more configs as needed e.g. client.DefaultRequestHeaders.Add("Accept", "application/json");
             })
-            .AddPolicyHandler(DynamicsCrmServicePolicies.GetRetryPolicy());
+            .AddPolicyHandler(DynamicsCrmServicePolicies.GetRetryPolicy(async (_, _, _, _) => { }));
             return services;
         }
     }
