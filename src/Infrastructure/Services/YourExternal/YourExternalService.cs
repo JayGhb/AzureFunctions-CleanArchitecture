@@ -20,8 +20,12 @@ namespace SlottingMock.Infrastructure.Services.YourExternal
         public async Task<IEnumerable<string>> GetDataAsync(CancellationToken cancellationToken) 
         {
             string requestUrl = _httpClient.BaseAddress + _getDataEndpoint;
-            _logger.LogInformation("Requesting data from Dynamics {request}", requestUrl);
-            HttpResponseMessage result = await _httpClient.GetAsync(requestUrl, cancellationToken);
+            _logger.LogInformation("Requesting data from external service {request}", requestUrl);
+            HttpResponseMessage response = await _httpClient.GetAsync(requestUrl, cancellationToken);
+            string responseContent = await response.Content.ReadAsStringAsync();
+            _logger.LogInformation("External service response {response}", responseContent);
+
+            //handle response as necessary
 
             return Enumerable.Empty<string>(); 
         }
