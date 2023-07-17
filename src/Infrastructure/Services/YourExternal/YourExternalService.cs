@@ -1,15 +1,15 @@
 ﻿using Microsoft.Extensions.Logging;
 using SlottingMock.Application.Common.Interfaces;
 
-namespace SlottingMock.Infrastructure.Services.DynamicsCrm
+namespace SlottingMock.Infrastructure.Services.YourExternal
 {
-    public class DynamicsCrmService : IDynamicsCrmService
+    public class YourExternalService : IYourExternalService
     {
         private readonly HttpClient _httpClient;
         private readonly string _getDataEndpoint;
-        private ILogger<DynamicsCrmService> _logger;
+        private ILogger<YourExternalService> _logger;
 
-        public DynamicsCrmService(HttpClient httpClient, ILogger<DynamicsCrmService> logger)
+        public YourExternalService(HttpClient httpClient, ILogger<YourExternalService> logger)
         {
             _getDataEndpoint = Environment.GetEnvironmentVariable("GetDataEndpoint");
             if(_getDataEndpoint == null) throw new ArgumentNullException(nameof(_getDataEndpoint), $"Environment variable for GetDataEndpoint is not set.");

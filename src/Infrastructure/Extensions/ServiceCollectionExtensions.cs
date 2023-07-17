@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Infrastructure.Services.YourExternal;
+using Microsoft.Extensions.DependencyInjection;
 using SlottingMock.Application.Common.Interfaces;
-using SlottingMock.Infrastructure.Services.DynamicsCrm;
-using Infrastructure.Services.DynamicsCrm;
+using SlottingMock.Infrastructure.Services.YourExternal;
 
 namespace Infrastructure.Extensions
 {
@@ -10,7 +10,7 @@ namespace Infrastructure.Extensions
         public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services)
         {
             //services.AddDbContext();
-            services.AddDynamicsCrmService();
+            services.AddExternalService();
             return services;
         }
 
@@ -22,14 +22,14 @@ namespace Infrastructure.Extensions
             return services;
         }*/
 
-        private static IServiceCollection AddDynamicsCrmService(this IServiceCollection services)
+        private static IServiceCollection AddExternalService(this IServiceCollection services)
         {
-            services.AddHttpClient<IDynamicsCrmService, DynamicsCrmService>("dynamicsCrm", client =>
+            services.AddHttpClient<IYourExternalService, YourExternalService>("externalServiceClient", client =>
             {
-                client.BaseAddress = new Uri("https://yourorganizationname.api.crm.dynamics.com");
+                client.BaseAddress = new Uri("https://reqres.in/api");
                 //add more configs as needed e.g. client.DefaultRequestHeaders.Add("Accept", "application/json");
             })
-            .AddPolicyHandler(DynamicsCrmServicePolicies.GetRetryPolicy(async (_, _, _, _) => { }));
+            .AddPolicyHandler(YourExternalServicePolicies.GetRetryPolicy(async (_, _, _, _) => { }));
             return services;
         }
     }

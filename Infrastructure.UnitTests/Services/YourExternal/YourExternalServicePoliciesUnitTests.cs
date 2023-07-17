@@ -1,12 +1,12 @@
-using Infrastructure.Services.DynamicsCrm;
+using Infrastructure.Services.YourExternal;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net;
 
-namespace Infrastructure.UnitTests.Services.DynamicsCrm
+namespace Infrastructure.UnitTests.Services.YourExternal
 {
     /// <summary>
     /// These unit tests are inspired by https://github.com/App-vNext/Polly/issues/555#issuecomment-451594435. <br/>
-    /// The <see cref="DynamicsCrmServicePolicies.GetRetryPolicy(Func{Polly.DelegateResult{HttpResponseMessage}, TimeSpan, int, Polly.Context, Task})"/> <br/> 
+    /// The <see cref="YourExternalServicePolicies.GetRetryPolicy(Func{Polly.DelegateResult{HttpResponseMessage}, TimeSpan, int, Polly.Context, Task})"/> <br/> 
     /// method gets a function that simply marks a boolean value as true, as its onRetryAsync method, indicating that the retries have been executed.
     /// </summary>
     /// <returns></returns>
@@ -25,7 +25,7 @@ namespace Infrastructure.UnitTests.Services.DynamicsCrm
             HttpStatusCode statusCodeHandledByPolicy = HttpStatusCode.TooManyRequests;
 
             services.AddHttpClient(fakeClient)
-            .AddPolicyHandler(DynamicsCrmServicePolicies.GetRetryPolicy(async (_, _, _, _) => retryCalled = true))
+            .AddPolicyHandler(YourExternalServicePolicies.GetRetryPolicy(async (_, _, _, _) => retryCalled = true))
             .AddHttpMessageHandler(() => new FakeDelegatingHandler(statusCodeHandledByPolicy, "Retry-After", "1"));
             
             HttpClient configuredClient =
@@ -53,7 +53,7 @@ namespace Infrastructure.UnitTests.Services.DynamicsCrm
             HttpStatusCode statusCodeHandledByPolicy = HttpStatusCode.TooManyRequests;
 
             services.AddHttpClient(fakeClient)
-            .AddPolicyHandler(DynamicsCrmServicePolicies.GetRetryPolicy(async (_, _, _, _) => retryCalled = true))
+            .AddPolicyHandler(YourExternalServicePolicies.GetRetryPolicy(async (_, _, _, _) => retryCalled = true))
             .AddHttpMessageHandler(() => new FakeDelegatingHandler(statusCodeHandledByPolicy, string.Empty, string.Empty));
 
             HttpClient configuredClient =
@@ -81,7 +81,7 @@ namespace Infrastructure.UnitTests.Services.DynamicsCrm
             HttpStatusCode statusCodeHandledByPolicy = HttpStatusCode.NotFound;
 
             services.AddHttpClient(fakeClient)
-            .AddPolicyHandler(DynamicsCrmServicePolicies.GetRetryPolicy(async (_, _, _, _) => retryCalled = true))
+            .AddPolicyHandler(YourExternalServicePolicies.GetRetryPolicy(async (_, _, _, _) => retryCalled = true))
             .AddHttpMessageHandler(() => new FakeDelegatingHandler(statusCodeHandledByPolicy, "Retry-After", "1"));
 
             HttpClient configuredClient =

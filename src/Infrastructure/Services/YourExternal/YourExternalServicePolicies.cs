@@ -1,9 +1,9 @@
 ﻿using Polly;
 using System.Net;
 
-namespace Infrastructure.Services.DynamicsCrm
+namespace Infrastructure.Services.YourExternal
 {
-    public class DynamicsCrmServicePolicies
+    public class YourExternalServicePolicies
     {
         /// <summary>
         /// 

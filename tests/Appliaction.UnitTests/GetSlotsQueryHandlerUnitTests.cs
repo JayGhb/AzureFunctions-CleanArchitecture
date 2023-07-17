@@ -7,12 +7,12 @@ namespace Appliaction.UnitTests
 {
     public class GetSlotsQueryHandlerUnitTests
     {
-        private readonly Mock<IDynamicsCrmService> _ruleEngineServiceMock;
+        private readonly Mock<IYourExternalService> _ruleEngineServiceMock;
         private readonly Mock<ILogger<GetSlotsQueryHandler>> _loggerMock;
 
         public GetSlotsQueryHandlerUnitTests()
         {
-            _ruleEngineServiceMock = new Mock<IDynamicsCrmService>();
+            _ruleEngineServiceMock = new Mock<IYourExternalService>();
             _loggerMock = new Mock<ILogger<GetSlotsQueryHandler>>();
         }
 
