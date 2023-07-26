@@ -1,5 +1,4 @@
-﻿using Application.Common;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
@@ -33,16 +32,14 @@ namespace Api
                 if (!string.IsNullOrWhiteSpace(correlationId))
                 {
                     hasValidCorrelationId = true;
-                    loggerScope = _logger.BeginScope(new Dictionary<string, object> { { "CustomParameterName", correlationId } });
-                    RequestContext.CorrelationId = correlationId;
+                    loggerScope = _logger.BeginScope(new Dictionary<string, object> { { "CorrelationId", correlationId } });
                 }
             }
 
             if (!hasValidCorrelationId)
             {
                 string guid = Guid.NewGuid().ToString();
-                RequestContext.CorrelationId = guid;
-                loggerScope = _logger.BeginScope(new Dictionary<string, object> { { "CustomParameterName", guid } });
+                loggerScope = _logger.BeginScope(new Dictionary<string, object> { { "CorrelationId", guid } });
             }
 
             return Task.CompletedTask;

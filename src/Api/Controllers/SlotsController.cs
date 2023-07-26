@@ -35,7 +35,6 @@ namespace SlottingMock.Api.Controllers
             try
             {
                 _logger.LogInformation("from injected logger");
-                string correlationId = RequestContext.CorrelationId;
 
                 GetSlotsQuery getSlotsQuery = new GetSlotsQuery(input.Date);
                 string result = await _mediator.Send(getSlotsQuery, cancellationToken);
