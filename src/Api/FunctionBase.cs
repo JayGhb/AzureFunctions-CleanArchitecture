@@ -13,22 +13,26 @@ namespace Api
     public class FunctionBase : IFunctionInvocationFilter
     {
         private readonly ILogger _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private StringValues correlationId;
         private IDisposable loggerScope;
+        private const string correlationIdHeaderName = "x-correlation-id";
 
-        public FunctionBase(ILogger logger)
+        public FunctionBase(ILogger logger, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public Task OnExecutingAsync(FunctionExecutingContext executingContext, CancellationToken cancellationToken)
         {
             bool hasValidCorrelationId = false;
-            StringValues correlationId = string.Empty;
+            //StringValues correlationId = string.Empty;
 
-            var httpRequest = executingContext?.Arguments?.Values.OfType<HttpRequest>().FirstOrDefault();
+            HttpRequest httpRequest = executingContext?.Arguments?.Values.OfType<HttpRequest>().FirstOrDefault();
             if (!hasValidCorrelationId && httpRequest != null)
             {
-                httpRequest.Headers.TryGetValue("x-correlation-id", out correlationId);
+                httpRequest.Headers.TryGetValue(correlationIdHeaderName, out correlationId);
                 if (!string.IsNullOrWhiteSpace(correlationId))
                 {
                     hasValidCorrelationId = true;
@@ -39,6 +43,7 @@ namespace Api
             if (!hasValidCorrelationId)
             {
                 string guid = Guid.NewGuid().ToString();
+                correlationId = guid;
                 loggerScope = _logger.BeginScope(new Dictionary<string, object> { { "CorrelationId", guid } });
             }
 
@@ -48,6 +53,9 @@ namespace Api
         public Task OnExecutedAsync(FunctionExecutedContext executedContext, CancellationToken cancellationToken)
         {
             loggerScope?.Dispose();
+            //It is advised not to add correlation id in response headers if the client application
+            //is is not within your organization
+            _httpContextAccessor.HttpContext.Response.Headers.Add(correlationIdHeaderName, correlationId);
             return Task.CompletedTask;
         }
     }

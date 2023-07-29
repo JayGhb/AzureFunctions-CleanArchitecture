@@ -20,7 +20,7 @@ namespace Api.Controllers
         private readonly IMediator _mediator;
         private readonly ILogger<SlotsController> _logger;
 
-        public SlotsController(IMediator mediator, ILogger<SlotsController> logger) : base(logger)
+        public SlotsController(IMediator mediator, ILogger<SlotsController> logger, IHttpContextAccessor httpContextAccessor) : base(logger, httpContextAccessor)
         {
             _mediator = mediator;
             _logger = logger;

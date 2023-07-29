@@ -1,7 +1,6 @@
 ﻿using Infrastructure.Services.YourExternal;
 using Microsoft.Extensions.DependencyInjection;
 using Application.Common.Interfaces;
-using Infrastructure.Services.YourExternal;
 
 namespace Infrastructure.Extensions
 {
@@ -24,9 +23,11 @@ namespace Infrastructure.Extensions
 
         private static IServiceCollection AddExternalService(this IServiceCollection services)
         {
-            services.AddHttpClient<IYourExternalService, YourExternalService>("externalServiceClient", client =>
+            services.AddHttpClient<IYourExternalService, YourExternalService>(client =>
             {
                 client.BaseAddress = new Uri("https://reqres.in/api");
+                client.DefaultRequestHeaders.Add("x-correlation-id", ""); ///TODO
+
                 //add more configs as needed e.g. client.DefaultRequestHeaders.Add("Accept", "application/json");
             })
             .AddPolicyHandler(YourExternalServicePolicies.GetRetryPolicy(async (_, _, _, _) => { }));
