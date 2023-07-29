@@ -35,7 +35,7 @@ jobs:
           popd
 
       - name: 'Run tests'
-        run: dotnet test --configuration Release --no-build --verbosity normal tests/**/*.csproj
+        run: dotnet test
 
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
