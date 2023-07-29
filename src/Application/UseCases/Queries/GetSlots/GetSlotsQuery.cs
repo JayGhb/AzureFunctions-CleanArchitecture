@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace SlottingMock.Application.UseCases.Queries.GetSlots
+namespace Application.UseCases.Queries.GetSlots
 {
     public class GetSlotsQuery : IRequest<string>
     {

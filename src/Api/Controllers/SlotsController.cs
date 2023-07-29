@@ -6,20 +6,19 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using MediatR;
-using SlottingMock.Application.UseCases.Queries.GetSlots;
+using Application.UseCases.Queries.GetSlots;
 using FluentValidation;
 using System.Linq;
 using Application.Common.Dtos.Requests;
 using System.Threading;
-using Application.Common;
-using Api;
+using Newtonsoft.Json;
 
-namespace SlottingMock.Api.Controllers
+namespace Api.Controllers
 {
     public class SlotsController : FunctionBase
     {
         private readonly IMediator _mediator;
-        private ILogger<SlotsController> _logger;
+        private readonly ILogger<SlotsController> _logger;
 
         public SlotsController(IMediator mediator, ILogger<SlotsController> logger) : base(logger)
         {
@@ -34,11 +33,10 @@ namespace SlottingMock.Api.Controllers
         {
             try
             {
-                _logger.LogInformation("from injected logger");
-
+                _logger.LogInformation("Processing request {input}", JsonConvert.SerializeObject(input));
                 GetSlotsQuery getSlotsQuery = new GetSlotsQuery(input.Date);
                 string result = await _mediator.Send(getSlotsQuery, cancellationToken);
-
+                _logger.LogInformation("{FunctionName} Function result: {result}", nameof(GetSlotsAsync), result);
                 return new OkObjectResult(result);
             }
             catch (Exception exception) 

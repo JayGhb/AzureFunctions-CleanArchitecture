@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
-using SlottingMock.Application.UseCases.Queries.GetSlots;
+using Application.UseCases.Queries.GetSlots;
 using System.Globalization;
 
-namespace SlottingMock.Application.Validators.Queries
+namespace Application.Validators.Queries
 {
     public class GetSlotsQueryValidator : AbstractValidator<GetSlotsQuery>
     {

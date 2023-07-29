@@ -1,6 +1,6 @@
 ﻿using Infrastructure.Extensions;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
-using SlottingMock.Application.Extensions;
+using Application.Extensions;
 
 [assembly: FunctionsStartup(typeof(Api.Startup))]
 

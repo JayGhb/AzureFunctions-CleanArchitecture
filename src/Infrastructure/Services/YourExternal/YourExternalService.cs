@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
-using SlottingMock.Application.Common.Interfaces;
+using Application.Common.Interfaces;
 
-namespace SlottingMock.Infrastructure.Services.YourExternal
+namespace Infrastructure.Services.YourExternal
 {
     public class YourExternalService : IYourExternalService
     {

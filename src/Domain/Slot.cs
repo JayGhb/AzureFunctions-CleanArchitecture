@@ -1,4 +1,4 @@
-﻿namespace SlottingMock.Domain
+﻿namespace Domain
 {
     public class Slot
     {

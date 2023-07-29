@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SlottingMock.Application.Validators.Commands
+namespace Application.Validators.Commands
 {
     public class ReserveSlotCommandValidator
     {

@@ -1,6 +1,6 @@
 ﻿using FluentValidation.TestHelper;
-using SlottingMock.Application.UseCases.Queries.GetSlots;
-using SlottingMock.Application.Validators.Queries;
+using Application.UseCases.Queries.GetSlots;
+using Application.Validators.Queries;
 
 namespace Appliaction.UnitTests.Validators.Queries
 {

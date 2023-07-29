@@ -1,7 +1,7 @@
 ﻿using Infrastructure.Services.YourExternal;
 using Microsoft.Extensions.DependencyInjection;
-using SlottingMock.Application.Common.Interfaces;
-using SlottingMock.Infrastructure.Services.YourExternal;
+using Application.Common.Interfaces;
+using Infrastructure.Services.YourExternal;
 
 namespace Infrastructure.Extensions
 {

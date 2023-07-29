@@ -9,9 +9,10 @@
     },
     "logLevel": {
       "default": "Warning",
-      "Function.SlottingMock.Api.Controllers.SlotsController": "Information",
-      "Function.SlottingMock.Application.UseCases.Queries.GetSlots.GetSlotsQueryHandler": "Information",
-      "Function.SlottingMock.Infrastructure.Services.YourExternal": "Information"
+      "Function.Api.Controllers.SlotsController": "Information",
+      "Function.Application.Common.Behaviors.ValidationBehavior": "Information",
+      "Function.Application.UseCases.Queries.GetSlots.GetSlotsQueryHandler": "Information",
+      "Function.Infrastructure.Services.YourExternal": "Information"
     }
   }
 }

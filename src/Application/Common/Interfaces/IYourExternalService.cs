@@ -1,5 +1,5 @@
 ﻿
-namespace SlottingMock.Application.Common.Interfaces
+namespace Application.Common.Interfaces
 {
     public interface IYourExternalService
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SlottingMock.Application.UseCases.Commands.ReserveSlot
+namespace Application.UseCases.Commands.ReserveSlot
 {
     public class ReserveSlotCommand
     {

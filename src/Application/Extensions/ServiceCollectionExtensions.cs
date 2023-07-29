@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Application.Common.Behaviors;
 using System.Reflection;
 
-namespace SlottingMock.Application.Extensions
+namespace Application.Extensions
 {
     public static class ServiceCollectionExtensions
     {

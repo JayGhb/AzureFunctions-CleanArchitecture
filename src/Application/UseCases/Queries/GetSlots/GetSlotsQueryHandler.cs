@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using SlottingMock.Application.Common.Interfaces;
+using Application.Common.Interfaces;
 
-namespace SlottingMock.Application.UseCases.Queries.GetSlots
+namespace Application.UseCases.Queries.GetSlots
 {
     public class GetSlotsQueryHandler : IRequestHandler<GetSlotsQuery, string>
     {
@@ -17,10 +17,8 @@ namespace SlottingMock.Application.UseCases.Queries.GetSlots
 
         public async Task<string> Handle(GetSlotsQuery request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("this works lol");
-            //await Task.Delay(10000, cancellationToken);
-            List<string> mySettings = (await _yourExternalService.GetDataAsync(cancellationToken)).ToList();
-
+            List<string> dataFromExternalService = (await _yourExternalService.GetDataAsync(cancellationToken)).ToList();
+            
             return string.Empty;
         }
     }

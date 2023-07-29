@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Moq;
-using SlottingMock.Application.Common.Interfaces;
-using SlottingMock.Application.UseCases.Queries.GetSlots;
+using Application.Common.Interfaces;
+using Application.UseCases.Queries.GetSlots;
 
 namespace Appliaction.UnitTests
 {
