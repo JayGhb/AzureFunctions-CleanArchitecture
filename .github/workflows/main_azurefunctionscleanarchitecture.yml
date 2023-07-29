@@ -34,6 +34,9 @@ jobs:
           dotnet build --configuration Release --output ./output
           popd
 
+      - name: 'Run tests'
+        run: dotnet test --configuration Release --no-build --verbosity normal tests/*.csproj
+
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
         id: fa
