@@ -16,3 +16,6 @@ The project adapts elements of the Clean Architecture approach into Azure Functi
 - Dependency Injection
 - The CQRS Pattern
 - The Mediator pattern and the use of MediatR
+
+## Work in progress
+The project is a work in progress and will be enriched as more posts are added to the series.
