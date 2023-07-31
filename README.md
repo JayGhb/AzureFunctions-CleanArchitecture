@@ -1,7 +1,7 @@
 # Azure Functions - Clean Architecture
 ![CI/CD](https://github.com/JayGhb/AzureFunctions-CleanArchitecture/actions/workflows/main_azurefunctionscleanarchitecture.yml/badge.svg)
 
-This is a reference project to accompany the "An application with respect to itself" series of posts. The project's aim is to showcase the use of five, in my opinion, core aspects that each production system of the appropriate size & business criticality oughts to incorporate and yet they are so often overlooked, resulting production issues, inefficiency when solving such, lost data and much more.
+This is a reference project to complement the "An application with respect to itself" series of posts. The project's aim is to showcase the use of five, in my opinion, core aspects that each production system of the appropriate size & business criticality oughts to incorporate and yet they are so often overlooked, resulting production issues, inefficiency when solving such, lost data and much more.
 
 ## Focus Points
 1. Input Validation
