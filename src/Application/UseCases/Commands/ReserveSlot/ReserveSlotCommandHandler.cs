@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Application.UseCases.Commands.ReserveSlot;
+using MediatR;
 
 namespace Application.UseCases.Commands
 {
-    public class ReserveSlotCommandHandler
+    public class ReserveSlotCommandHandler : IRequestHandler<ReserveSlotCommand, Unit>
     {
+        public Task<Unit> Handle(ReserveSlotCommand request, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
