@@ -30,7 +30,7 @@ namespace Application.Extensions
 
         public static IServiceCollection AddValidators(this IServiceCollection services)
         {
-            return services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            return services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), ServiceLifetime.Transient);
         }
     }
 }
