@@ -13,6 +13,7 @@ using Application.Common.Dtos.Requests;
 using System.Threading;
 using Newtonsoft.Json;
 using Application.UseCases.Commands.ReserveSlot;
+using Application.Common.Interfaces;
 
 namespace Api.Controllers
 {
@@ -21,7 +22,9 @@ namespace Api.Controllers
         private readonly IMediator _mediator;
         private readonly ILogger<SlotsController> _logger;
 
-        public SlotsController(IMediator mediator, ILogger<SlotsController> logger, IHttpContextAccessor httpContextAccessor) : base(logger, httpContextAccessor)
+        public SlotsController(IMediator mediator, ILogger<SlotsController> logger, 
+            IHttpContextAccessor httpContextAccessor,
+            ICorrelationContextAccessor correlationContextAccessor) : base(logger, httpContextAccessor, correlationContextAccessor)
         {
             _mediator = mediator;
             _logger = logger;
