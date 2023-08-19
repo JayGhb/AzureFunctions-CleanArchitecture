@@ -8,13 +8,16 @@ namespace Infrastructure.Services.YourExternal
         private readonly HttpClient _httpClient;
         private readonly string _getDataEndpoint;
         private ILogger<YourExternalService> _logger;
+        //private ICorrelationContextAccessor _correlationContextAccessor;
 
-        public YourExternalService(HttpClient httpClient, ILogger<YourExternalService> logger)
+        public YourExternalService(HttpClient httpClient, ILogger<YourExternalService> logger, ICorrelationContextAccessor correlationContextAccessor)
         {
             _getDataEndpoint = Environment.GetEnvironmentVariable("GetDataEndpoint");
-            if(_getDataEndpoint == null) throw new ArgumentNullException(nameof(_getDataEndpoint), $"Environment variable for GetDataEndpoint is not set.");
+            if (_getDataEndpoint == null) throw new ArgumentNullException(nameof(_getDataEndpoint), $"Environment variable for GetDataEndpoint is not set.");
             _httpClient = httpClient;
             _logger = logger;
+            //_correlationContextAccessor = correlationContextAccessor;
+            _httpClient.DefaultRequestHeaders.Add("x-correlation-id", correlationContextAccessor.CorrelationId);
         }
 
         public async Task<IEnumerable<string>> GetDataAsync(CancellationToken cancellationToken) 

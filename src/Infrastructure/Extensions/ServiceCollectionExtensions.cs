@@ -27,8 +27,7 @@ namespace Infrastructure.Extensions
             services.AddHttpClient<IYourExternalService, YourExternalService>(client =>
             {
                 client.BaseAddress = new Uri("https://reqres.in/api");
-                client.DefaultRequestHeaders.Add("x-correlation-id", ""); ///TODO
-
+                
                 //add more configs as needed e.g. client.DefaultRequestHeaders.Add("Accept", "application/json");
             })
             .AddPolicyHandler(YourExternalServicePolicies.GetRetryPolicy(async (_, _, _, _) => { }));
