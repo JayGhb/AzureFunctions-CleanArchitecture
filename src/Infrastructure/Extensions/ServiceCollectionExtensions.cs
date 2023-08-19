@@ -10,6 +10,7 @@ namespace Infrastructure.Extensions
         {
             //services.AddDbContext();
             services.AddExternalService();
+            services.AddCorrelationContext();
             return services;
         }
 
@@ -32,6 +33,11 @@ namespace Infrastructure.Extensions
             })
             .AddPolicyHandler(YourExternalServicePolicies.GetRetryPolicy(async (_, _, _, _) => { }));
             return services;
+        }
+
+        private static IServiceCollection AddCorrelationContext(this IServiceCollection services)
+        {
+            return services.AddScoped<ICorrelationContextAccessor, CorrelationContextAccessor>();
         }
     }
 }
